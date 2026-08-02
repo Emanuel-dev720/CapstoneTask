@@ -39,7 +39,7 @@ A full-stack ASP.NET Core MVC application built as part of my Moraine Park Techn
 - Use this if you're on the default LocalDB setup: "ConnectionStrings": {
   "DefaultConnection": "Server=(localdb)\\MSSQLLocalDB;Database=CapstoneTaskDB;Trusted_Connection=True;MultipleActiveResultSets=true"
 }
-- If you use SQL Server Express, change the server name: "DefaultConnection": "Server=YOURPCNAME\\SQLEXPRESS;Database=CapstoneTaskDB;Trusted_Connection=True;TrustServerCertificate=True;"
+- If you use SQL Server Express, change the server name: DefaultConnection: Server=YOURPCNAME\\SQLEXPRESS;Database=CapstoneTaskDB;Trusted_Connection=True;TrustServerCertificate=True;
 - Press Start in Visual Studio to run the application.
 - The app will open automatically in your browser at a local https://localhost:xxxx/ address.
 - Navigate to https://localhost:xxxx/Tasks in your browser.
