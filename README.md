@@ -51,14 +51,14 @@ A full-stack ASP.NET Core MVC application built as part of my Moraine Park Techn
 
 # Screenshots
 
-# Tasks Page
+## Tasks Page
 ![Tasks Page](Screenshots/Task-Page.png)
 
-# Edit & Add Task Page
+## Edit & Add Task Page
 ![Edit/Add Task Page](Screenshots/Edit-Add-Task.png)
 
-# Projects Page
+## Projects Page
 ![Projects Page](Screenshots/Projects.png)
 
-# CSV Exported File
+## CSV Exported File
 ![CSV Exported File](Screenshots/Exported-Tasks-CSV-File.png)
