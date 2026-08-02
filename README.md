@@ -1,6 +1,6 @@
 # CapstoneTask — Team-Based Full Stack Task & Project Management System
 
-A full-stack ASP.NET Core MVC application built as part of my Moraine Park Technical College capstone project. The system allows users to manage tasks, projects, filtering, soft delete, CSV export, and more.
+This is a full-stack ASP.NET Core MVC application built as part of my Moraine Park Technical College Capstone project. The system allows users to manage tasks, projects, filtering, soft delete, CSV export, and more.
 
 # Team Members
 - Devon Matter (Project Manager / Documentation)
