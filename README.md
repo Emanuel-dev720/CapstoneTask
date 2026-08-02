@@ -34,7 +34,7 @@ A full-stack ASP.NET Core MVC application built as part of my Moraine Park Techn
 - Managed Git/GitHub version control for backend work, including resolving merge conflicts and maintaining clean controller/model structure.
 
 # Instructions
-- Clone the repository and open the solution in Visual Studio 2022.
+- Clone the repository and open the solution in Visual Studio.
 - Add your SQL Server connection string to appsettings.json (this file is empty by default).
 - Use this if you're on the default LocalDB setup:
 
