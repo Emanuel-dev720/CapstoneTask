@@ -1,0 +1,136 @@
+﻿@{
+    ViewData["Title"] = "Tasks";
+    var tasks = ViewBag.Tasks as IEnumerable<dynamic>;
+}
+
+<style>
+    .ct-page { max-width: 1200px; margin: 0 auto; padding: 24px; font-family: Arial, sans-serif; color: #111; }
+    .ct-header { margin-bottom: 20px; }
+    .ct-title { font-size: 32px; font-weight: bold; margin-bottom: 8px; }
+    .ct-subtitle { color: #444; margin-bottom: 16px; }
+    .ct-nav { display: flex; gap: 12px; margin-bottom: 24px; }
+    .ct-nav a { text-decoration: none; padding: 10px 16px; border: 2px solid #111; border-radius: 12px; color: #111; font-weight: 600; }
+    .ct-nav a.active { background: #dbeafe; }
+    .ct-toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 12px; }
+    .ct-filters { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; background: #f5f5f5; border: 2px solid #111; border-radius: 16px; padding: 16px; }
+    .ct-filters label { display: block; font-weight: 600; margin-bottom: 6px; }
+    .ct-filters input, .ct-filters select { width: 100%; padding: 10px; border: 2px solid #111; border-radius: 12px; }
+    .ct-button { text-decoration: none; padding: 10px 16px; border: 2px solid #111; border-radius: 12px; color: #111; background: white; font-weight: 600; cursor: pointer; }
+    .ct-button.primary { background: #dbeafe; }
+    .ct-card { border: 2px solid #111; border-radius: 16px; overflow: hidden; background: white; }
+    .ct-table { width: 100%; border-collapse: collapse; }
+    .ct-table th { background: #111; color: white; text-align: left; padding: 12px; }
+    .ct-table td { padding: 12px; border-bottom: 1px solid #ddd; }
+    .ct-actions { display: flex; gap: 8px; }
+    .ct-empty { padding: 20px; }
+</style>
+
+<div class="ct-page">
+    <div class="ct-header">
+        <div class="ct-title">CapstoneTask</div>
+        <div class="ct-subtitle">Task List Page</div>
+    </div>
+
+    <div class="ct-nav">
+        <a asp-controller="Tasks" asp-action="Index" class="active">Tasks</a>
+        <a asp-controller="Projects" asp-action="Index">Projects</a>
+    </div>
+
+    <div class="ct-toolbar">
+        <div>
+            <h2 style="margin:0;">Tasks</h2>
+            <p style="margin:6px 0 0 0; color:#444;">View, edit, delete, and export tasks.</p>
+        </div>
+        <div style="display:flex; gap:10px;">
+            <a asp-controller="Tasks" asp-action="Create" class="ct-button primary">Add Task</a>
+            <a asp-controller="Tasks" asp-action="ExportCsv" class="ct-button">Export CSV</a>
+        </div>
+    </div>
+    @* 
+        Here the form sends filter choices back to the system so the task list can be narrowed down based on what the 
+        user selects. The names used here (search, status, priority, and projectId) match what the backend looks for 
+        when applying filters. That’s why the form uses these exact names.
+    *@
+    <form method="get" asp-controller="Tasks" asp-action="Index" class="ct-filters">
+        <div>
+            <label>Search Tasks</label>
+            <input type="text" name="search" value="@ViewBag.Search" placeholder="Search by task name" />
+        </div>
+        <div>
+            <label>Status</label>
+            <select name="status">
+                <option value="">All</option>
+                <option value="0" selected="@(ViewBag.Status == 0)">Not Started</option>
+                <option value="1" selected="@(ViewBag.Status == 1)">In Progress</option>
+                <option value="2" selected="@(ViewBag.Status == 2)">Completed</option>
+            </select>
+        </div>
+        <div>
+            <label>Priority</label>
+            <select name="priority">
+                <option value="">All</option>
+                <option value="3" selected="@(ViewBag.Priority == 3)">High</option>
+                <option value="2" selected="@(ViewBag.Priority == 2)">Medium</option>
+                <option value="1" selected="@(ViewBag.Priority == 1)">Low</option>
+            </select>
+        </div>
+        <div>
+            <label>Project</label>
+            <select name="projectId">
+                <option value="">All Projects</option>
+                @foreach (var p in ViewBag.Projects)
+                {
+                    <option value="@p.ProjectId" selected="@(ViewBag.ProjectId == p.ProjectId)">
+                        @p.Title
+                    </option>
+                }
+            </select>
+        </div>
+    </form>
+
+    <div class="ct-card">
+        <table class="ct-table">
+            <thead>
+                <tr>
+                    <th>Task Name</th>
+                    <th>Project</th>
+                    <th>Status</th>
+                    <th>Priority</th>
+                    <th>Due Date</th>
+                    <th>Assigned User</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (tasks != null)
+                {
+                    foreach (var task in tasks)
+                    {
+                        <tr>
+                            <td>@task.Title</td>
+                            <td>@task.ProjectName</td>
+                            <td>@task.Status</td>
+                            <td>@task.Priority</td>
+                            <td>@task.DueDate</td>
+                            <td>@task.AssignedUser</td>
+                            <td>
+                                <div class="ct-actions">
+                                    <a asp-controller="Tasks" asp-action="Edit" asp-route-id="@task.TaskId" class="ct-button">Edit</a>
+                                    <form asp-controller="Tasks" asp-action="Delete" asp-route-id="@task.TaskId" method="post" style="display:inline;">
+                                        <button type="submit" class="ct-button">Delete</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="7" class="ct-empty">No tasks are available yet.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

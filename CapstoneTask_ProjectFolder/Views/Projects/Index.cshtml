@@ -1,0 +1,109 @@
+﻿Index.cshtml:
+
+@{
+    ViewData["Title"] = "Projects";
+    var projects = ViewBag.Projects as IEnumerable<dynamic>;
+}
+
+<style>
+    .ct-page {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 24px;
+        font-family: Arial, sans-serif;
+        color: #111;
+    }
+
+    .ct-title {
+        font-size: 32px;
+        font-weight: bold;
+        margin-bottom: 8px;
+    }
+
+    .ct-subtitle {
+        color: #444;
+        margin-bottom: 16px;
+    }
+
+    .ct-nav {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 24px;
+    }
+
+        .ct-nav a {
+            text-decoration: none;
+            padding: 10px 16px;
+            border: 2px solid #111;
+            border-radius: 12px;
+            color: #111;
+            font-weight: 600;
+        }
+
+            .ct-nav a.active {
+                background: #dbeafe;
+            }
+
+    .ct-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+
+    .ct-card {
+        border: 2px solid #111;
+        border-radius: 16px;
+        background: white;
+        padding: 20px;
+    }
+
+        .ct-card h3 {
+            margin-top: 0;
+        }
+
+    .ct-button {
+        text-decoration: none;
+        display: inline-block;
+        padding: 10px 16px;
+        border: 2px solid #111;
+        border-radius: 12px;
+        color: #111;
+        background: #f3f4f6;
+        font-weight: 600;
+        margin-top: 10px;
+    }
+</style>
+
+<div class="ct-page">
+    <div class="ct-title">CapstoneTask</div>
+    <div class="ct-subtitle">Project View Page</div>
+
+    <div class="ct-nav">
+        <a asp-controller="Tasks" asp-action="Index">Tasks</a>
+        <a asp-controller="Projects" asp-action="Index" class="active">Projects</a>
+    </div>
+
+    <div class="ct-grid">
+        @if (projects != null && projects.Any())
+        {
+            foreach (var project in projects)
+            {
+                <div class="ct-card">
+                    <h3>@project.Title</h3>
+                    <p>@project.Description</p>
+                    <p><strong>Owner:</strong> @project.OwnerName</p>
+                    <p><strong>Visibility:</strong> @project.Visibility</p>
+                    <p><strong>Task Count:</strong> @project.TaskCount</p>
+                    <a asp-controller="Tasks" asp-action="Index" asp-route-projectId="@project.ProjectId" class="ct-button">View Project Tasks</a>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="ct-card">
+                <h3>No projects available</h3>
+                <p>Project data will display here once it is loaded from the database.</p>
+            </div>
+        }
+    </div>
+</div>

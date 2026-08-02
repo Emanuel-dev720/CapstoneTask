@@ -1,0 +1,193 @@
+﻿@{
+    ViewData["Title"] = "Create Task";
+    var projects = ViewBag.Projects as IEnumerable<dynamic>;
+    var users = ViewBag.Users as IEnumerable<dynamic>;
+}
+
+<style>
+    .ct-page {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 24px;
+        font-family: Arial, sans-serif;
+        color: #111;
+    }
+
+    .ct-title {
+        font-size: 32px;
+        font-weight: bold;
+        margin-bottom: 8px;
+    }
+
+    .ct-subtitle {
+        color: #444;
+        margin-bottom: 16px;
+    }
+
+    .ct-nav {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 24px;
+    }
+
+        .ct-nav a {
+            text-decoration: none;
+            padding: 10px 16px;
+            border: 2px solid #111;
+            border-radius: 12px;
+            color: #111;
+            font-weight: 600;
+        }
+
+            .ct-nav a.active {
+                background: #dbeafe;
+            }
+
+    .ct-card {
+        border: 2px solid #111;
+        border-radius: 16px;
+        padding: 24px;
+        background: #f5f5f5;
+    }
+
+    .ct-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+    }
+
+    .ct-full {
+        grid-column: 1 / -1;
+    }
+
+    .ct-field label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 6px;
+    }
+
+    .ct-field input, .ct-field textarea, .ct-field select {
+        width: 100%;
+        padding: 10px;
+        border: 2px solid #111;
+        border-radius: 12px;
+    }
+
+    .ct-field textarea {
+        min-height: 120px;
+    }
+
+    .ct-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .ct-button {
+        text-decoration: none;
+        padding: 10px 16px;
+        border: 2px solid #111;
+        border-radius: 12px;
+        color: #111;
+        background: white;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+        .ct-button.primary {
+            background: #dbeafe;
+        }
+</style>
+
+<div class="ct-page">
+    <div class="ct-title">CapstoneTask</div>
+    <div class="ct-subtitle">Create Task</div>
+
+    <div class="ct-nav">
+        <a asp-controller="Tasks" asp-action="Index" class="active">Tasks</a>
+        <a asp-controller="Projects" asp-action="Index">Projects</a>
+    </div>
+
+    <div class="ct-card">
+        <form asp-controller="Tasks" asp-action="Create" method="post">
+            <div class="ct-grid">
+
+                @* 
+                    This dropdown needed a correction because the system expects the field name ProjectId when saving a 
+                    task. Using this name ensures the selected project is sent back correctly when the form is submitted. 
+                    That’s why the name attribute below is set to ProjectId.
+                *@
+                <div class="ct-field ct-full">
+                    <label>Project</label>
+                    <select name="ProjectId">
+                        <option value="">Select a project</option>
+                        @if (projects != null)
+                        {
+                            foreach (var project in projects)
+                            {
+                                <option value="@project.ProjectId">@project.Title</option>
+                            }
+                        }
+                    </select>
+                </div>
+
+                <div class="ct-field ct-full">
+                    <label>Task Name</label>
+                    <input type="text" name="Title" placeholder="Enter task name" />
+                </div>
+
+                <div class="ct-field ct-full">
+                    <label>Description</label>
+                    <textarea name="Description" placeholder="Enter task description"></textarea>
+                </div>
+
+                <div class="ct-field">
+                    <label>Status</label>
+                    <select name="Status">
+                        <option value="0">Not Started</option>
+                        <option value="1">In Progress</option>
+                        <option value="2">Completed</option>
+                    </select>
+                </div>
+
+                <div class="ct-field">
+                    <label>Priority</label>
+                    <select name="Priority">
+                        <option value="1">Low</option>
+                        <option value="2" selected>Medium</option>
+                        <option value="3">High</option>
+                    </select>
+                </div>
+
+                <div class="ct-field">
+                    <label>Due Date</label>
+                    <input type="date" name="DueDate" />
+                </div>
+
+                @*
+                    Here the dropdown also needed a correction because the system uses the field CreatedByUserId to store who 
+                    is responsible for the task. Using this name ensures the selected user is sent back correctly when the 
+                    form is submitted. That’s why the name attribute below is set to CreatedByUserId.
+                *@
+                <div class="ct-field">
+                    <label>Assigned User</label>
+                    <select name="CreatedByUserId">
+                        <option value="">Select a user</option>
+                        @if (users != null)
+                        {
+                            foreach (var user in users)
+                            {
+                                <option value="@user.UserId">@user.DisplayName</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="ct-actions">
+                <button type="submit" class="ct-button primary">Save Task</button>
+                <a asp-controller="Tasks" asp-action="Index" class="ct-button">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
