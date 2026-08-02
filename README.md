@@ -32,3 +32,14 @@ A full-stack ASP.NET Core MVC application built as part of my Moraine Park Techn
 - Ensured backend–database–frontend alignment through testing, debugging, and workflow coordination.
 - Wrote backend documentation and contributed to final project documentation and presentation.
 - Managed Git/GitHub version control for backend work, including resolving merge conflicts and maintaining clean controller/model structure.
+
+# Instructions
+- Clone the repository and open the solution in Visual Studio 2022.
+- Add your SQL Server connection string to appsettings.json (this file is empty by default).
+- Use this if you're on the default LocalDB setup:
+- Press Start in Visual Studio to run the application.
+- The app will open automatically in your browser at a local https://localhost:xxxx/ address.
+- Navigate to https://localhost:xxxx/Tasks in your browser.
+- You can now create tasks, edit tasks, soft delete tasks, filter/search, export CSV, and view projects.
+
+# Screenshots
